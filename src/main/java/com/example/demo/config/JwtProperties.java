@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
 @Data
 public class JwtProperties {
     private String secret = "mySecretKey";
-    private Long expirationMs = 86400000L; // 24 hours
+    private Long expirationMs = 86400000L; 
 }
