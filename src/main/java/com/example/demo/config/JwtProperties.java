@@ -11,10 +11,3 @@ public class JwtProperties {
     private String secret = "mySecretKey";
     private Long expirationMs = 86400000L; // 24 hours
 }
-@Component
-@ConfigurationProperties(prefix = "jwt")
-@Data
-public class JwtProperties {
-    private String secret;
-    private long expirationMs;
-}
