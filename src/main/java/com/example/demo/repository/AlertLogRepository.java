@@ -1,7 +1,7 @@
-package com.example.demo.exception;
+package com.example.demo.repository;
 
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message) {
-        super(message);
-    }
+import com.example.demo.entity.AlertLog;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AlertLogRepository extends JpaRepository<AlertLog, Long> {
 }
