@@ -7,3 +7,8 @@ public class AuthRequest {
     private String email;
     private String password;
 }
+@Data
+public class AuthRequest {
+    private String email;
+    private String password;
+}
