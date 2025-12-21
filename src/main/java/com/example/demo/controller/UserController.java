@@ -5,7 +5,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserService userService;
+    private final userService;
     
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
