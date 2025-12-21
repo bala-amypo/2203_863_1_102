@@ -1,7 +1,10 @@
-import org.springframework.stereotype.Service;
+package com.example.demo.service;
+
+import com.example.demo.entity.User;
 import java.util.List;
 
 public interface UserService {
-    User register(User user);
-    User findByEmail(String email);
+    User createUser(User user);
+    List<User> getAllUsers();
+    User getUserById(Long id);
 }

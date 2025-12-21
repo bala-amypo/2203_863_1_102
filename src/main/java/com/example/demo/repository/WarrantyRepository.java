@@ -1,8 +1,6 @@
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
-import java.util.Optional;
+package com.example.demo.repository;
 
-public interface WarrantyRepository extends JpaRepository<Warranty, Long> {
-    boolean existsBySerialNumber(String serialNumber);
-    List<Warranty> findByUserId(Long userId);
-}
+import com.example.demo.entity.Warranty;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface WarrantyRepository extends JpaRepository<Warranty, Long> {}
