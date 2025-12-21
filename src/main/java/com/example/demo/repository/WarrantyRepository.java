@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface WarrantyRepository extends JpaRepository<Warranty, Long> {
 
-    List<Warranty> findByExpiryDateBetween(LocalDate start, LocalDate end);
+    List<Warranty> findByExpiryDateBetween(LocalDate startDate, LocalDate endDate);
 
     boolean existsBySerialNumber(String serialNumber);
 }
