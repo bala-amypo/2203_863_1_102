@@ -12,5 +12,5 @@ public interface WarrantyRepository extends JpaRepository<Warranty, Long> {
 
     List<Warranty> findByExpiryDateBetween(LocalDate startDate, LocalDate endDate);
 
-    boolean existsBySerialNumber(String serialNumber);
+    List<Warranty> findByUserId(Long userId);
 }

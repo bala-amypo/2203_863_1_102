@@ -1,49 +1,53 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "warranties")
 public class Warranty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-    private Long productId;
-    private LocalDate purchaseDate;
     private LocalDate expiryDate;
-    private String serialNumber;
 
-    public Warranty() {}
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    public Warranty(Long id, Long userId, Long productId, LocalDate purchaseDate, LocalDate expiryDate, String serialNumber) {
-        this.id = id;
-        this.userId = userId;
-        this.productId = productId;
-        this.purchaseDate = purchaseDate;
-        this.expiryDate = expiryDate;
-        this.serialNumber = serialNumber;
+    private Long userId; // if warranty is associated with a user
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
 
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
 
-    public LocalDate getPurchaseDate() { return purchaseDate; }
-    public void setPurchaseDate(LocalDate purchaseDate) { this.purchaseDate = purchaseDate; }
+    public Product getProduct() {
+        return product;
+    }
 
-    public LocalDate getExpiryDate() { return expiryDate; }
-    public void setExpiryDate(LocalDate expiryDate) { this.expiryDate = expiryDate; }
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
-    public String getSerialNumber() { return serialNumber; }
-    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

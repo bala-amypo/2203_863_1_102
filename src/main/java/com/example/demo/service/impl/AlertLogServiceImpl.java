@@ -29,7 +29,7 @@ public class AlertLogServiceImpl implements AlertLogService {
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
 
         AlertLog log = new AlertLog();
-        log.setWarranty(warranty);
+        log.setWarranty(warranty);   // uses getter/setter
         log.setMessage(message);
 
         return alertLogRepository.save(log);
@@ -39,7 +39,7 @@ public class AlertLogServiceImpl implements AlertLogService {
     public List<AlertLog> getLogs(Long warrantyId) {
         return alertLogRepository.findByWarrantyId(warrantyId);
     }
-    
+
     public void generateExpiryAlerts(int daysAhead) {
         LocalDate today = LocalDate.now();
         LocalDate targetDate = today.plusDays(daysAhead);
@@ -47,7 +47,8 @@ public class AlertLogServiceImpl implements AlertLogService {
         List<Warranty> expiringWarranties = warrantyRepository.findByExpiryDateBetween(today, targetDate);
 
         for (Warranty warranty : expiringWarranties) {
-            String message = "Warranty for product '" + warranty.getProduct().getName() +
+            String productName = (warranty.getProduct() != null) ? warranty.getProduct().getName() : "Unknown Product";
+            String message = "Warranty for product '" + productName +
                     "' is expiring on " + warranty.getExpiryDate();
             addLog(warranty.getId(), message);
         }
