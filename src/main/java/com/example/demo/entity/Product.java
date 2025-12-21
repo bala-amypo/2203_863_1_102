@@ -4,10 +4,10 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private String modelNumber;  // Add this field
-    private String category;     // Add this field
+    private String modelNumber;  // required by ProductServiceImpl
+    private String category;     // required by ProductServiceImpl
 
-    // Existing getters and setters
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -17,7 +17,6 @@ public class Product {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    // New getters and setters for modelNumber and category
     public String getModelNumber() { return modelNumber; }
     public void setModelNumber(String modelNumber) { this.modelNumber = modelNumber; }
 
