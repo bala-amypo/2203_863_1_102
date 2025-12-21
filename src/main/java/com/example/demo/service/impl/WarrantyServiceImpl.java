@@ -6,8 +6,6 @@ import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WarrantyRepository;
 import com.example.demo.service.WarrantyService;
-List<Warranty> expiringWarranties = warrantyRepository.findByExpiryDateBetween(startDate, endDate);
-
 
 import org.springframework.stereotype.Service;
 import java.util.List;
