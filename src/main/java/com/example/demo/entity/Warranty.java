@@ -1,23 +1,24 @@
+package com.example.demo.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
-import java.util.List;
+
 @Entity
-@Table(name = "warranties")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Table(name = "warranties")
 public class Warranty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String warrantyType;
+    private int duration; // in months
+
     @ManyToOne
     private User user;
+
     @ManyToOne
     private Product product;
-    private LocalDate purchaseDate;
-    private LocalDate expiryDate;
-    @Column(unique = true)
-    private String serialNumber;
 }
