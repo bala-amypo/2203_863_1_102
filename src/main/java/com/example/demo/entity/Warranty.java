@@ -1,11 +1,10 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "warranties")
 public class Warranty {
 
     @Id
@@ -14,17 +13,58 @@ public class Warranty {
 
     private Long userId;
     private Long productId;
-    private String warrantyNumber;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private LocalDate purchaseDate;
+    private LocalDate expiryDate;
+    private String serialNumber;
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public Warranty() {}
 
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
-
-    public String getWarrantyNumber() { return warrantyNumber; }
-    public void setWarrantyNumber(String warrantyNumber) { this.warrantyNumber = warrantyNumber; }
+    public Long getId() {
+        return id;
+    }
+ 
+    public void setId(Long id) {
+        this.id = id;
+    }
+ 
+    public Long getUserId() {
+        return userId;
+    }
+ 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+ 
+    public Long getProductId() {
+        return productId;
+    }
+ 
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+ 
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+ 
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+ 
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+ 
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+ 
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+ 
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 }
