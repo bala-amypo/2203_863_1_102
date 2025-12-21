@@ -1,39 +1,26 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-
-@Entity
 public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String description;
+    private String modelNumber;  // Add this field
+    private String category;     // Add this field
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    // Existing getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    // New getters and setters for modelNumber and category
+    public String getModelNumber() { return modelNumber; }
+    public void setModelNumber(String modelNumber) { this.modelNumber = modelNumber; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
 }
