@@ -5,21 +5,17 @@ import com.example.demo.service.WarrantyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/warranties")
 public class WarrantyController {
-    private final WarrantyService warrantyService;
 
     @Autowired
-    public WarrantyController(WarrantyService warrantyService) {
-        this.warrantyService = warrantyService;
-    }
+    private WarrantyService warrantyService;
 
     @PostMapping("/register/{userId}/{productId}")
-    public ResponseEntity<Warranty> registerWarranty(@PathVariable Long userId,
+    public ResponseEntity<Warranty> registerWarranty(@PathVariable Long userId, 
                                                      @PathVariable Long productId,
                                                      @RequestBody Warranty warranty) {
         return ResponseEntity.ok(warrantyService.registerWarranty(userId, productId, warranty));

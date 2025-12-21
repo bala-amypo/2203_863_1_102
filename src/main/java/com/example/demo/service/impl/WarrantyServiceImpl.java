@@ -5,30 +5,30 @@ import com.example.demo.repository.WarrantyRepository;
 import com.example.demo.service.WarrantyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WarrantyServiceImpl implements WarrantyService {
-    private final WarrantyRepository warrantyRepository;
 
     @Autowired
-    public WarrantyServiceImpl(WarrantyRepository warrantyRepository) {
-        this.warrantyRepository = warrantyRepository;
-    }
+    private WarrantyRepository warrantyRepository;
 
     @Override
     public Warranty registerWarranty(Long userId, Long productId, Warranty warranty) {
+        warranty.setUserId(userId);
+        warranty.setProductId(productId);
         return warrantyRepository.save(warranty);
     }
 
     @Override
-    public Warranty getWarranty(Long id) {
-        return warrantyRepository.findById(id).orElse(null);
+    public Warranty getWarranty(Long warrantyId) {
+        Optional<Warranty> warrantyOpt = warrantyRepository.findById(warrantyId);
+        return warrantyOpt.orElse(null);
     }
 
     @Override
     public List<Warranty> getUserWarranties(Long userId) {
-        return warrantyRepository.findAll(); // simplified, no relationships
+        return warrantyRepository.findByUserId(userId);
     }
 }
