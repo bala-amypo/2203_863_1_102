@@ -4,7 +4,7 @@ import com.example.demo.entity.User;
 import java.util.List;
 
 public interface UserService {
-    User createUser(User user);
+    User saveUser(User user);
+    User getUser(Long id);
     List<User> getAllUsers();
-    User getUserById(Long id);
 }
