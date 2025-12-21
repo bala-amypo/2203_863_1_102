@@ -1,14 +1,23 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.time.LocalDate;
 
+@Entity
 public class Warranty {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long productId;
-    private Long userId;              // required for setUserId()
-    private LocalDate purchaseDate;   // required by WarrantyServiceImpl
-    private LocalDate expiryDate;     // required by both AlertLogServiceImpl & WarrantyServiceImpl
-    private String serialNumber;      // required for existsBySerialNumber()
+    private Long userId;
+    private LocalDate purchaseDate;
+    private LocalDate expiryDate;
+    private String serialNumber;
 
     // Getters and Setters
     public Long getId() { return id; }
