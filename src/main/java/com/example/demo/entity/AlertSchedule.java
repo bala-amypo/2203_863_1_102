@@ -16,35 +16,22 @@ public class AlertSchedule {
 
     public AlertSchedule() {}
 
-    public Long getId() {
-        return id;
-    }
- 
-    public void setId(Long id) {
+    public AlertSchedule(Long id, Long warrantyId, Integer daysBeforeExpiry, Boolean enabled) {
         this.id = id;
-    }
- 
-    public Long getWarrantyId() {
-        return warrantyId;
-    }
- 
-    public void setWarrantyId(Long warrantyId) {
         this.warrantyId = warrantyId;
-    }
- 
-    public Integer getDaysBeforeExpiry() {
-        return daysBeforeExpiry;
-    }
- 
-    public void setDaysBeforeExpiry(Integer daysBeforeExpiry) {
         this.daysBeforeExpiry = daysBeforeExpiry;
-    }
- 
-    public Boolean getEnabled() {
-        return enabled;
-    }
- 
-    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Long getWarrantyId() { return warrantyId; }
+    public void setWarrantyId(Long warrantyId) { this.warrantyId = warrantyId; }
+
+    public Integer getDaysBeforeExpiry() { return daysBeforeExpiry; }
+    public void setDaysBeforeExpiry(Integer daysBeforeExpiry) { this.daysBeforeExpiry = daysBeforeExpiry; }
+
+    public Boolean getEnabled() { return enabled; }
+    public void setEnabled(Boolean enabled) { this.enabled = enabled; }
 }
