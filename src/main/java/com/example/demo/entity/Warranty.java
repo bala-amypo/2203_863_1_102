@@ -1,15 +1,20 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Warranty {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String warrantyDetails;
+    private Long userId;
+    private Long productId;
+    private String warrantyNumber;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
+
+    public String getWarrantyNumber() { return warrantyNumber; }
+    public void setWarrantyNumber(String warrantyNumber) { this.warrantyNumber = warrantyNumber; }
 }
