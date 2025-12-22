@@ -14,10 +14,9 @@ public class Product {
 
     private String name;
     private String description;
-    private String modelNumber;  // required by ProductServiceImpl
-    private String category;     // required by ProductServiceImpl
+    private String modelNumber;  
+    private String category;   
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

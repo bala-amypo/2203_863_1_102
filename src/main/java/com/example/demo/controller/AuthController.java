@@ -27,6 +27,6 @@ public class AuthController {
             throw new IllegalArgumentException("Invalid credentials");
         }
 
-        return user; // returning user temporarily (NO JWT)
+        return user; 
     }
 }

@@ -19,7 +19,6 @@ public class Warranty {
     private LocalDate expiryDate;
     private String serialNumber;
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
