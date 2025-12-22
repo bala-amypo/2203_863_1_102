@@ -25,7 +25,7 @@ public class AlertLogServiceImpl implements AlertLogService {
 
     @Override
     public AlertLog addLog(Long warrantyId, String message) {
-        // Ensure warranty exists
+       
         Warranty warranty = warrantyRepository.findById(warrantyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
 
@@ -45,13 +45,11 @@ public class AlertLogServiceImpl implements AlertLogService {
         LocalDate today = LocalDate.now();
         LocalDate targetDate = today.plusDays(daysAhead);
 
-        // Use repository method that exists
         List<Warranty> expiringWarranties = warrantyRepository.findByExpiryDateBetween(today, targetDate);
 
         for (Warranty warranty : expiringWarranties) {
             String productName = (warranty.getProductId() != null) ? 
                     "Product ID: " + warranty.getProductId() : "Unknown Product"; 
-            // You can fetch full product if needed via ProductRepository
 
             String message = "Warranty for product '" + productName +
                     "' is expiring on " + warranty.getExpiryDate();
