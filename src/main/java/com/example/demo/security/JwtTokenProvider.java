@@ -1,9 +1,7 @@
 package com.example.demo.security;
 
 import com.example.demo.config.JwtProperties;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,26 +20,29 @@ public class JwtTokenProvider {
         Date expiryDate = new Date(now.getTime() + jwtProperties.getExpirationMs());
 
         return Jwts.builder()
-                .setSubject(email)
-                .claim("userId", userId)
+                .setSubject(userId.toString())
+                .claim("email", email)
                 .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
                 .compact();
     }
 
-    public boolean validateToken(String token) {
-        Jwts.parser()
-                .setSigningKey(jwtProperties.getSecret())
-                .parseClaimsJws(token);
-        return true;
-    }
-
-    public Claims getClaims(String token) {
-        return Jwts.parser()
+    public Long getUserIdFromJWT(String token) {
+        Claims claims = Jwts.parser()
                 .setSigningKey(jwtProperties.getSecret())
                 .parseClaimsJws(token)
                 .getBody();
+        return Long.parseLong(claims.getSubject());
+    }
+
+    public boolean validateToken(String authToken) {
+        try {
+            Jwts.parser().setSigningKey(jwtProperties.getSecret()).parseClaimsJws(authToken);
+            return true;
+        } catch (JwtException ex) {
+            return false;
+        }
     }
 }
