@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.payload.LoginRequest;
 import com.example.demo.payload.JwtResponse;
 import com.example.demo.security.JwtTokenProvider;
-import com.example.demo.model.User;
+import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
