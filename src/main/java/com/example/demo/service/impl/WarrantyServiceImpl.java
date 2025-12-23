@@ -1,13 +1,16 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.Product;
+import com.example.demo.entity.User;
 import com.example.demo.entity.Warranty;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.WarrantyRepository;
 import com.example.demo.service.WarrantyService;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -26,13 +29,14 @@ public class WarrantyServiceImpl implements WarrantyService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Warranty registerWarranty(Long userId, Long productId, Warranty warranty) {
 
-        userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found"));
 
-        productRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Product not found"));
 
@@ -42,12 +46,11 @@ public class WarrantyServiceImpl implements WarrantyService {
         }
 
         if (warrantyRepository.existsBySerialNumber(warranty.getSerialNumber())) {
-            throw new IllegalArgumentException(
-                    "Serial number must be unique");
+            throw new IllegalArgumentException("Serial number must be unique");
         }
 
-        warranty.setUserId(userId);
-        warranty.setProductId(productId);
+        warranty.setUser(user);
+        warranty.setProduct(product);
 
         return warrantyRepository.save(warranty);
     }

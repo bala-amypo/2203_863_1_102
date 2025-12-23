@@ -7,8 +7,8 @@ import com.example.demo.repository.AlertLogRepository;
 import com.example.demo.repository.WarrantyRepository;
 import com.example.demo.service.AlertLogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -24,13 +24,15 @@ public class AlertLogServiceImpl implements AlertLogService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AlertLog addLog(Long warrantyId, String message) {
-       
+
         Warranty warranty = warrantyRepository.findById(warrantyId)
-                .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Warranty not found"));
 
         AlertLog log = new AlertLog();
-        log.setWarrantyId(warranty.getId()); // <-- use existing setter
+        log.setWarranty(warranty);
         log.setMessage(message);
 
         return alertLogRepository.save(log);
@@ -39,21 +41,5 @@ public class AlertLogServiceImpl implements AlertLogService {
     @Override
     public List<AlertLog> getLogs(Long warrantyId) {
         return alertLogRepository.findByWarrantyId(warrantyId);
-    }
-
-    public void generateExpiryAlerts(int daysAhead) {
-        LocalDate today = LocalDate.now();
-        LocalDate targetDate = today.plusDays(daysAhead);
-
-        List<Warranty> expiringWarranties = warrantyRepository.findByExpiryDateBetween(today, targetDate);
-
-        for (Warranty warranty : expiringWarranties) {
-            String productName = (warranty.getProductId() != null) ? 
-                    "Product ID: " + warranty.getProductId() : "Unknown Product"; 
-
-            String message = "Warranty for product '" + productName +
-                    "' is expiring on " + warranty.getExpiryDate();
-            addLog(warranty.getId(), message);
-        }
     }
 }
