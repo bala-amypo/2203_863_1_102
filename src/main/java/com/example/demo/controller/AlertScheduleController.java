@@ -16,9 +16,9 @@ public class AlertScheduleController {
         this.alertScheduleService = alertScheduleService;
     }
 
-    @PostMapping
-    public AlertSchedule create(@RequestBody AlertSchedule schedule) {
-        return alertScheduleService.createSchedule(schedule);
+    @PostMapping("/{userId}")
+    public AlertSchedule create(@PathVariable Long userId, @RequestBody AlertSchedule schedule) {
+        return alertScheduleService.createSchedule(userId, schedule);
     }
 
     @GetMapping
@@ -29,5 +29,10 @@ public class AlertScheduleController {
     @GetMapping("/{id}")
     public AlertSchedule getById(@PathVariable Long id) {
         return alertScheduleService.getScheduleById(id);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<AlertSchedule> getByUser(@PathVariable Long userId) {
+        return alertScheduleService.getSchedules(userId);
     }
 }

@@ -6,6 +6,7 @@ import com.example.demo.service.AlertScheduleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlertScheduleServiceImpl implements AlertScheduleService {
@@ -17,7 +18,8 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
     }
 
     @Override
-    public AlertSchedule createSchedule(AlertSchedule schedule) {
+    public AlertSchedule createSchedule(Long userId, AlertSchedule schedule) {
+        schedule.setUserId(userId);  
         return repository.save(schedule);
     }
 
@@ -28,6 +30,12 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
 
     @Override
     public AlertSchedule getScheduleById(Long id) {
-        return repository.findById(id).orElse(null);
+        Optional<AlertSchedule> optional = repository.findById(id);
+        return optional.orElse(null);
+    }
+
+    @Override
+    public List<AlertSchedule> getSchedules(Long userId) {
+        return repository.findByUserId(userId); 
     }
 }

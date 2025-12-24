@@ -5,7 +5,11 @@ import java.util.List;
 
 public interface AlertScheduleService {
 
-    AlertSchedule createSchedule(Long warrantyId, AlertSchedule schedule);
+    AlertSchedule createSchedule(Long userId, AlertSchedule schedule);
 
-    List<AlertSchedule> getSchedules(Long warrantyId);
+    List<AlertSchedule> getAllSchedules();
+
+    AlertSchedule getScheduleById(Long id);
+
+    List<AlertSchedule> getSchedules(Long userId);
 }
