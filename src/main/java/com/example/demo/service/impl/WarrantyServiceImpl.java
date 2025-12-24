@@ -1,69 +1,38 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Product;
-import com.example.demo.entity.User;
-import com.example.demo.entity.Warranty;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.ProductRepository;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.repository.WarrantyRepository;
-import com.example.demo.service.WarrantyService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import java.util.List;
 
-@Service
-public class WarrantyServiceImpl implements WarrantyService {
+public class WarrantyServiceImpl {
 
-    private final WarrantyRepository warrantyRepository;
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
+    private final WarrantyRepository wRepo;
+    private final UserRepository uRepo;
+    private final ProductRepository pRepo;
 
-    public WarrantyServiceImpl(WarrantyRepository warrantyRepository,
-                               UserRepository userRepository,
-                               ProductRepository productRepository) {
-        this.warrantyRepository = warrantyRepository;
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
+    public WarrantyServiceImpl(WarrantyRepository w, UserRepository u, ProductRepository p) {
+        this.wRepo = w;
+        this.uRepo = u;
+        this.pRepo = p;
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Warranty registerWarranty(Long userId, Long productId, Warranty warranty) {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
-
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Product not found"));
-
-        if (!warranty.getExpiryDate().isAfter(warranty.getPurchaseDate())) {
-            throw new IllegalArgumentException(
-                    "Expiry date must be after purchase date");
+    public Warranty registerWarranty(Long uid, Long pid, Warranty w) {
+        if (!w.getExpiryDate().isAfter(w.getPurchaseDate())) {
+            throw new IllegalArgumentException("Expiry date must be after purchase date");
         }
-
-        if (warrantyRepository.existsBySerialNumber(warranty.getSerialNumber())) {
+        if (wRepo.existsBySerialNumber(w.getSerialNumber())) {
             throw new IllegalArgumentException("Serial number must be unique");
         }
-
-        warranty.setUser(user);
-        warranty.setProduct(product);
-
-        return warrantyRepository.save(warranty);
+        w.setUser(uRepo.findById(uid).orElseThrow());
+        w.setProduct(pRepo.findById(pid).orElseThrow());
+        return wRepo.save(w);
     }
 
-    @Override
-    public Warranty getWarranty(Long warrantyId) {
-        return warrantyRepository.findById(warrantyId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Warranty not found"));
+    public List<Warranty> getUserWarranties(Long uid) {
+        return wRepo.findByUserId(uid);
     }
 
-    @Override
-    public List<Warranty> getUserWarranties(Long userId) {
-        return warrantyRepository.findByUserId(userId);
+    public Warranty getWarranty(Long id) {
+        return wRepo.findById(id).orElseThrow();
     }
 }

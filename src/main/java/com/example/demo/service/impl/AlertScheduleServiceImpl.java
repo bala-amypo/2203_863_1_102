@@ -1,47 +1,29 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.AlertSchedule;
-import com.example.demo.entity.Warranty;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.AlertScheduleRepository;
-import com.example.demo.repository.WarrantyRepository;
-import com.example.demo.service.AlertScheduleService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import java.util.List;
 
-@Service
-public class AlertScheduleServiceImpl implements AlertScheduleService {
+public class AlertScheduleServiceImpl {
 
-    private final AlertScheduleRepository scheduleRepository;
-    private final WarrantyRepository warrantyRepository;
+    private final AlertScheduleRepository repo;
+    private final WarrantyRepository wRepo;
 
-    public AlertScheduleServiceImpl(AlertScheduleRepository scheduleRepository,
-                                    WarrantyRepository warrantyRepository) {
-        this.scheduleRepository = scheduleRepository;
-        this.warrantyRepository = warrantyRepository;
+    public AlertScheduleServiceImpl(AlertScheduleRepository r, WarrantyRepository w) {
+        this.repo = r;
+        this.wRepo = w;
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public AlertSchedule createSchedule(Long warrantyId, AlertSchedule schedule) {
-
-        if (schedule.getDaysBeforeExpiry() < 0) {
-            throw new IllegalArgumentException("daysBeforeExpiry must be >= 0");
+    public AlertSchedule createSchedule(Long wid, AlertSchedule s) {
+        if (s.getDaysBeforeExpiry() < 0) {
+            throw new IllegalArgumentException("daysBeforeExpiry");
         }
-
-        Warranty warranty = warrantyRepository.findById(warrantyId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Warranty not found"));
-
-        schedule.setWarranty(warranty);
-
-        return scheduleRepository.save(schedule);
+        wRepo.findById(wid).orElseThrow();
+        return repo.save(s);
     }
 
-    @Override
-    public List<AlertSchedule> getSchedules(Long warrantyId) {
-        return scheduleRepository.findByWarrantyId(warrantyId);
+    public List<AlertSchedule> getSchedules(Long wid) {
+        wRepo.findById(wid).orElseThrow();
+        return repo.findByWarrantyId(wid);
     }
 }

@@ -1,45 +1,28 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.AlertLog;
-import com.example.demo.entity.Warranty;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.AlertLogRepository;
-import com.example.demo.repository.WarrantyRepository;
-import com.example.demo.service.AlertLogService;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.example.demo.entity.*;
+import com.example.demo.repository.*;
 import java.util.List;
 
-@Service
-public class AlertLogServiceImpl implements AlertLogService {
+public class AlertLogServiceImpl {
 
-    private final AlertLogRepository alertLogRepository;
-    private final WarrantyRepository warrantyRepository;
+    private final AlertLogRepository repo;
+    private final WarrantyRepository wRepo;
 
-    public AlertLogServiceImpl(AlertLogRepository alertLogRepository,
-                               WarrantyRepository warrantyRepository) {
-        this.alertLogRepository = alertLogRepository;
-        this.warrantyRepository = warrantyRepository;
+    public AlertLogServiceImpl(AlertLogRepository r, WarrantyRepository w) {
+        this.repo = r;
+        this.wRepo = w;
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public AlertLog addLog(Long warrantyId, String message) {
-
-        Warranty warranty = warrantyRepository.findById(warrantyId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Warranty not found"));
-
-        AlertLog log = new AlertLog();
-        log.setWarranty(warranty);
-        log.setMessage(message);
-
-        return alertLogRepository.save(log);
+    public AlertLog addLog(Long wid, String msg) {
+        wRepo.findById(wid).orElseThrow();
+        AlertLog l = AlertLog.builder().message(msg).build();
+        l.prePersist();
+        return repo.save(l);
     }
 
-    @Override
-    public List<AlertLog> getLogs(Long warrantyId) {
-        return alertLogRepository.findByWarrantyId(warrantyId);
+    public List<AlertLog> getLogs(Long wid) {
+        wRepo.findById(wid).orElseThrow();
+        return repo.findByWarrantyId(wid);
     }
 }
