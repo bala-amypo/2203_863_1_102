@@ -1,28 +1,31 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.AlertLog;
+import com.example.demo.repository.AlertLogRepository;
+import com.example.demo.service.AlertLogService;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-public class AlertLogServiceImpl {
+@Service
+public class AlertLogServiceImpl implements AlertLogService {
 
-    private final AlertLogRepository repo;
-    private final WarrantyRepository wRepo;
+    private final AlertLogRepository alertLogRepository;
 
-    public AlertLogServiceImpl(AlertLogRepository r, WarrantyRepository w) {
-        this.repo = r;
-        this.wRepo = w;
+    public AlertLogServiceImpl(AlertLogRepository alertLogRepository) {
+        this.alertLogRepository = alertLogRepository;
     }
 
-    public AlertLog addLog(Long wid, String msg) {
-        wRepo.findById(wid).orElseThrow();
-        AlertLog l = AlertLog.builder().message(msg).build();
-        l.prePersist();
-        return repo.save(l);
+    @Override
+    public AlertLog addLog(Long scheduleId, String message) {
+        AlertLog log = new AlertLog();
+        log.setScheduleId(scheduleId);
+        log.setMessage(message);
+        return alertLogRepository.save(log);
     }
 
-    public List<AlertLog> getLogs(Long wid) {
-        wRepo.findById(wid).orElseThrow();
-        return repo.findByWarrantyId(wid);
+    @Override
+    public List<AlertLog> getLogs(Long scheduleId) {
+        return alertLogRepository.findByScheduleId(scheduleId);
     }
 }
