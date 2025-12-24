@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "warranties")
@@ -16,8 +17,13 @@ public class Warranty {
 
     private String warrantyDetails;
 
-    public Warranty() {
-    }
+    private String serialNumber;
+
+    private LocalDate purchaseDate;
+
+    private LocalDate expiryDate;
+
+    public Warranty() {}
 
     public Long getId() {
         return id;
@@ -49,5 +55,29 @@ public class Warranty {
 
     public void setWarrantyDetails(String warrantyDetails) {
         this.warrantyDetails = warrantyDetails;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
     }
 }
