@@ -10,6 +10,4 @@ public interface AlertScheduleService {
     List<AlertSchedule> getAllSchedules();
 
     AlertSchedule getScheduleById(Long id);
-
-    List<AlertSchedule> getSchedules(Long userId);
 }

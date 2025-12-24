@@ -1,23 +1,41 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class AlertSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer daysBeforeExpiry;
-    private Boolean enabled;
+    private int daysBeforeExpiry;
 
-    @ManyToOne
-    private Warranty warranty;
+    private Long userId; 
+    public AlertSchedule() {}
+
+    public AlertSchedule(int daysBeforeExpiry, Long userId) {
+        this.daysBeforeExpiry = daysBeforeExpiry;
+        this.userId = userId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getDaysBeforeExpiry() {
+        return daysBeforeExpiry;
+    }
+
+    public void setDaysBeforeExpiry(int daysBeforeExpiry) {
+        this.daysBeforeExpiry = daysBeforeExpiry;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }
