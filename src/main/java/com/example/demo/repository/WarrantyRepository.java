@@ -1,13 +1,9 @@
 package com.example.demo.repository;
 
-import java.util.*;
-import java.time.LocalDate;
-import com.example.demo.entity.*;
+import com.example.demo.entity.Warranty;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface WarrantyRepository {
-    Warranty save(Warranty w);
-    Optional<Warranty> findById(Long id);
-    List<Warranty> findByUserId(Long userId);
-    boolean existsBySerialNumber(String serial);
-    List<Warranty> findWarrantiesExpiringBetween(LocalDate from, LocalDate to);
+@Repository
+public interface WarrantyRepository extends JpaRepository<Warranty, Long> {
 }

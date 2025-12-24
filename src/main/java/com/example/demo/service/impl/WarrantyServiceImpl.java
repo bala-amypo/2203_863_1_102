@@ -1,38 +1,37 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.Warranty;
+import com.example.demo.repository.WarrantyRepository;
+import com.example.demo.service.WarrantyService;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
-public class WarrantyServiceImpl {
+@Service
+public class WarrantyServiceImpl implements WarrantyService {
 
-    private final WarrantyRepository wRepo;
-    private final UserRepository uRepo;
-    private final ProductRepository pRepo;
+    private final WarrantyRepository warrantyRepository;
 
-    public WarrantyServiceImpl(WarrantyRepository w, UserRepository u, ProductRepository p) {
-        this.wRepo = w;
-        this.uRepo = u;
-        this.pRepo = p;
+    public WarrantyServiceImpl(WarrantyRepository warrantyRepository) {
+        this.warrantyRepository = warrantyRepository;
     }
 
-    public Warranty registerWarranty(Long uid, Long pid, Warranty w) {
-        if (!w.getExpiryDate().isAfter(w.getPurchaseDate())) {
-            throw new IllegalArgumentException("Expiry date must be after purchase date");
-        }
-        if (wRepo.existsBySerialNumber(w.getSerialNumber())) {
-            throw new IllegalArgumentException("Serial number must be unique");
-        }
-        w.setUser(uRepo.findById(uid).orElseThrow());
-        w.setProduct(pRepo.findById(pid).orElseThrow());
-        return wRepo.save(w);
+    @Override
+    public Warranty saveWarranty(Warranty warranty) {
+        return warrantyRepository.save(warranty);
     }
 
-    public List<Warranty> getUserWarranties(Long uid) {
-        return wRepo.findByUserId(uid);
+    @Override
+    public List<Warranty> getAllWarranties() {
+        return warrantyRepository.findAll();
     }
 
-    public Warranty getWarranty(Long id) {
-        return wRepo.findById(id).orElseThrow();
+    @Override
+    public Warranty getWarrantyById(Long id) {
+        return warrantyRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteWarranty(Long id) {
+        warrantyRepository.deleteById(id);
     }
 }
