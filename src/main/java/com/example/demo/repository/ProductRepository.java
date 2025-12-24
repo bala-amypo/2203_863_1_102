@@ -1,6 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.*;
+import com.example.demo.entity.*;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {}
+public interface ProductRepository {
+    Product save(Product p);
+    List<Product> findAll();
+    Optional<Product> findById(Long id);
+}
