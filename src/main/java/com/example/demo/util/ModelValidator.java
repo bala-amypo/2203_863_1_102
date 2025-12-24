@@ -1,61 +1,55 @@
 package com.example.demo.util;
 
+import com.example.demo.entity.AlertSchedule;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.User;
 import com.example.demo.entity.Warranty;
-import com.example.demo.entity.AlertSchedule;
-
-import java.time.LocalDate;
 
 public class ModelValidator {
 
     public static void validateUser(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User required");
+            throw new IllegalArgumentException("User cannot be null");
         }
-        if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new IllegalArgumentException("Email required");
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+            throw new IllegalArgumentException("User email cannot be null or empty");
         }
-        if (user.getPassword() == null || user.getPassword().isBlank()) {
-            throw new IllegalArgumentException("Password required");
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("User password cannot be null or empty");
         }
     }
-
     public static void validateProduct(Product product) {
         if (product == null) {
-            throw new IllegalArgumentException("Product required");
+            throw new IllegalArgumentException("Product cannot be null");
         }
-        if (product.getModelNumber() == null || product.getModelNumber().isBlank()) {
-            throw new IllegalArgumentException("Model number required");
+        if (product.getModelNumber() == null || product.getModelNumber().isEmpty()) {
+            throw new IllegalArgumentException("Product model number cannot be null or empty");
         }
-        if (product.getCategory() == null || product.getCategory().isBlank()) {
-            throw new IllegalArgumentException("Category required");
+        if (product.getCategory() == null || product.getCategory().isEmpty()) {
+            throw new IllegalArgumentException("Product category cannot be null or empty");
         }
     }
 
     public static void validateWarranty(Warranty warranty) {
         if (warranty == null) {
-            throw new IllegalArgumentException("Warranty required");
+            throw new IllegalArgumentException("Warranty cannot be null");
         }
-        LocalDate purchase = warranty.getPurchaseDate();
-        LocalDate expiry = warranty.getExpiryDate();
-        if (purchase == null || expiry == null) {
-            throw new IllegalArgumentException("Dates required");
+        if (warranty.getPurchaseDate() == null) {
+            throw new IllegalArgumentException("Warranty purchase date cannot be null");
         }
-        if (!expiry.isAfter(purchase)) {
-            throw new IllegalArgumentException("Expiry date must be after purchase date");
+        if (warranty.getExpiryDate() == null) {
+            throw new IllegalArgumentException("Warranty expiry date cannot be null");
         }
-        if (warranty.getSerialNumber() == null || warranty.getSerialNumber().isBlank()) {
-            throw new IllegalArgumentException("Serial number required");
+        if (warranty.getSerialNumber() == null || warranty.getSerialNumber().isEmpty()) {
+            throw new IllegalArgumentException("Warranty serial number cannot be null or empty");
         }
     }
-
     public static void validateAlertSchedule(AlertSchedule schedule) {
         if (schedule == null) {
-            throw new IllegalArgumentException("Schedule required");
+            throw new IllegalArgumentException("AlertSchedule cannot be null");
         }
-        if (schedule.getDaysBeforeExpiry() == null || schedule.getDaysBeforeExpiry() < 0) {
-            throw new IllegalArgumentException("daysBeforeExpiry must be >= 0");
+        if (schedule.getDaysBeforeExpiry() <= 0) {
+            throw new IllegalArgumentException("Days before expiry must be greater than 0");
         }
     }
 }
