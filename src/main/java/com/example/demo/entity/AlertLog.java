@@ -1,30 +1,35 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class AlertLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long scheduleId;
+
     private String message;
-    private LocalDateTime sentAt;
 
-    @ManyToOne
-    private Warranty warranty;
+    public Long getId() {
+        return id;
+    }
 
-    @PrePersist
-    public void prePersist() {
-        sentAt = LocalDateTime.now();
+    public Long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(Long scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
