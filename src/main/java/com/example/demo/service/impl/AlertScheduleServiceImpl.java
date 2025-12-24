@@ -17,7 +17,7 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
 
     @Override
     public AlertSchedule createSchedule(Long userId, AlertSchedule schedule) {
-        schedule.setUserId(userId); // Set userId before saving
+        schedule.setUserId(userId); 
         return repository.save(schedule);
     }
 

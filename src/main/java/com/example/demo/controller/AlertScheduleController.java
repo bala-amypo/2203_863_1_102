@@ -2,37 +2,30 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.AlertSchedule;
 import com.example.demo.service.AlertScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/schedules")
+@RequestMapping("/api/alertschedules")
 public class AlertScheduleController {
 
-    private final AlertScheduleService alertScheduleService;
+    @Autowired
+    private AlertScheduleService alertScheduleService;
 
-    public AlertScheduleController(AlertScheduleService alertScheduleService) {
-        this.alertScheduleService = alertScheduleService;
-    }
-
-    @PostMapping("/{userId}")
-    public AlertSchedule create(@PathVariable Long userId, @RequestBody AlertSchedule schedule) {
+    @PostMapping("/create/{userId}")
+    public AlertSchedule createSchedule(@PathVariable Long userId, @RequestBody AlertSchedule schedule) {
         return alertScheduleService.createSchedule(userId, schedule);
     }
 
-    @GetMapping
-    public List<AlertSchedule> getAll() {
+    @GetMapping("/all")
+    public List<AlertSchedule> getAllSchedules() {
         return alertScheduleService.getAllSchedules();
     }
 
     @GetMapping("/{id}")
-    public AlertSchedule getById(@PathVariable Long id) {
+    public AlertSchedule getScheduleById(@PathVariable Long id) {
         return alertScheduleService.getScheduleById(id);
-    }
-
-    @GetMapping("/user/{userId}")
-    public List<AlertSchedule> getByUser(@PathVariable Long userId) {
-        return alertScheduleService.getSchedules(userId);
     }
 }
