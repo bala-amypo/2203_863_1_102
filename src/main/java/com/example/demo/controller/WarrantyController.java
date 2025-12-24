@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.entity.Warranty;
 import com.example.demo.service.WarrantyService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,10 +15,10 @@ public class WarrantyController {
         this.warrantyService = warrantyService;
     }
 
-    @PostMapping("/{userId}/{productId}")
-    public Warranty register(@PathVariable Long userId,
-                             @PathVariable Long productId,
-                             @RequestBody Warranty warranty) {
+    @PostMapping("/register")
+    public Warranty registerWarranty(@RequestParam Long userId,
+                                     @RequestParam Long productId,
+                                     @RequestBody Warranty warranty) {
         return warrantyService.registerWarranty(userId, productId, warranty);
     }
 

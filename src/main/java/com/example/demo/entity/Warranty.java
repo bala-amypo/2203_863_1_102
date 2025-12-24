@@ -1,29 +1,53 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name = "warranties")
 public class Warranty {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate purchaseDate;
-    private LocalDate expiryDate;
-    private String serialNumber;
+    private Long userId;
 
-    @ManyToOne
-    private User user;
+    private Long productId;
 
-    @ManyToOne
-    private Product product;
+    private String warrantyDetails;
+
+    public Warranty() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public String getWarrantyDetails() {
+        return warrantyDetails;
+    }
+
+    public void setWarrantyDetails(String warrantyDetails) {
+        this.warrantyDetails = warrantyDetails;
+    }
 }
