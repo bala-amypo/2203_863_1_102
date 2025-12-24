@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User createUser(User user);
+    User register(User user); // <-- add this
     List<User> getAllUsers();
     User getUserById(Long id);
-    Optional<User> findByEmail(String email); // <--- this must match
+    Optional<User> findByEmail(String email);
 }
