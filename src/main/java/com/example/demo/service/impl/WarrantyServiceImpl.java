@@ -16,22 +16,19 @@ public class WarrantyServiceImpl implements WarrantyService {
     }
 
     @Override
-    public Warranty saveWarranty(Warranty warranty) {
+    public Warranty registerWarranty(Long userId, Long productId, Warranty warranty) {
+        warranty.setUserId(userId);
+        warranty.setProductId(productId);
         return warrantyRepository.save(warranty);
     }
 
     @Override
-    public List<Warranty> getAllWarranties() {
-        return warrantyRepository.findAll();
+    public List<Warranty> getUserWarranties(Long userId) {
+        return warrantyRepository.findByUserId(userId);
     }
 
     @Override
-    public Warranty getWarrantyById(Long id) {
-        return warrantyRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public void deleteWarranty(Long id) {
-        warrantyRepository.deleteById(id);
+    public Warranty getWarranty(Long warrantyId) {
+        return warrantyRepository.findById(warrantyId).orElse(null);
     }
 }
