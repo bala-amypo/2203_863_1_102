@@ -39,6 +39,8 @@ public class AlertLogServiceImpl implements AlertLogService {
 
     @Override
     public List<AlertLog> getLogs(Long warrantyId) {
+        warrantyRepository.findById(warrantyId)
+                .orElseThrow(() -> new RuntimeException("Warranty not found"));
         return alertLogRepository.findByWarrantyId(warrantyId);
     }
 }

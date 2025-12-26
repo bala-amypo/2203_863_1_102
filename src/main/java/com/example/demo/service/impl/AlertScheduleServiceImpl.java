@@ -39,6 +39,9 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
 
     @Override
     public List<AlertSchedule> getSchedules(Long warrantyId) {
+        // Check if warranty exists first
+        warrantyRepository.findById(warrantyId)
+                .orElseThrow(() -> new RuntimeException("Warranty not found"));
         return alertScheduleRepository.findByWarrantyId(warrantyId);
     }
 }
