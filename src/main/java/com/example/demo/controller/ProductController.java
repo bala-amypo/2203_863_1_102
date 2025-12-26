@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +18,13 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @PostMapping
     @Operation(summary = "Add a new product")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         Product savedProduct = productService.addProduct(product);
         return ResponseEntity.ok(savedProduct);
@@ -31,6 +32,7 @@ public class ProductController {
 
     @GetMapping
     @Operation(summary = "Get all products")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);

@@ -17,7 +17,6 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
     private final AlertScheduleRepository alertScheduleRepository;
     private final WarrantyRepository warrantyRepository;
 
-    @Autowired
     public AlertScheduleServiceImpl(AlertScheduleRepository alertScheduleRepository, 
                                    WarrantyRepository warrantyRepository) {
         this.alertScheduleRepository = alertScheduleRepository;

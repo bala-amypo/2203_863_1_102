@@ -17,7 +17,6 @@ public class AlertLogServiceImpl implements AlertLogService {
     private final AlertLogRepository alertLogRepository;
     private final WarrantyRepository warrantyRepository;
 
-    @Autowired
     public AlertLogServiceImpl(AlertLogRepository alertLogRepository, 
                               WarrantyRepository warrantyRepository) {
         this.alertLogRepository = alertLogRepository;
@@ -39,6 +38,7 @@ public class AlertLogServiceImpl implements AlertLogService {
 
     @Override
     public List<AlertLog> getLogs(Long warrantyId) {
+        // Check if warranty exists first
         warrantyRepository.findById(warrantyId)
                 .orElseThrow(() -> new RuntimeException("Warranty not found"));
         return alertLogRepository.findByWarrantyId(warrantyId);
