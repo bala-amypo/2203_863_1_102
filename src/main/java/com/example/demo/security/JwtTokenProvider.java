@@ -33,6 +33,10 @@ public class JwtTokenProvider {
             .compact();
     }
     
+    public String generateToken(Long userId, String email, String role) {
+        return createToken(userId, email, role);
+    }
+    
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -40,6 +44,24 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    public String getEmailFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+        return claims.get("email", String.class);
+    }
+    
+    public String getRoleFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+        return claims.get("role", String.class);
     }
     
     public Jws<Claims> getClaims(String token) {
