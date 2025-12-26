@@ -12,6 +12,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
