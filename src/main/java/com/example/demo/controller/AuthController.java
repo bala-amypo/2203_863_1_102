@@ -59,4 +59,13 @@ public class AuthController {
         
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/profile")
+    @Operation(summary = "Get user profile")
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<User> getProfile() {
+        User user = new User();
+        user.setName("Current User");
+        return ResponseEntity.ok(user);
+    }
 }
