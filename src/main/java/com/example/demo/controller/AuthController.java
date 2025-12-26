@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,29 +58,5 @@ public class AuthController {
         AuthResponse response = new AuthResponse(token, user.getId(), user.getEmail(), user.getRole());
         
         return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/profile")
-    @Operation(summary = "Get user profile")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<User> getProfile() {
-        User user = new User();
-        user.setName("Current User");
-        return ResponseEntity.ok(user);
-    }
-
-    @GetMapping("/token")
-    @Operation(summary = "Get JWT token (🔒 Lock symbol endpoint)")
-    public ResponseEntity<String> getToken(@RequestParam String email, @RequestParam String password) {
-        try {
-            User user = userService.findByEmail(email);
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                String token = jwtTokenProvider.generateToken(user.getId(), user.getEmail(), user.getRole());
-                return ResponseEntity.ok(token);
-            }
-            return ResponseEntity.status(401).body("Invalid credentials");
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
     }
 }
