@@ -25,8 +25,8 @@ public class JwtTokenProvider {
     }
 
     public JwtTokenProvider(JwtProperties properties) {
-        this.key = Keys.hmacShaKeyFor(properties.getSecret().getBytes());
-        this.expiration = properties.getExpiration();
+        this.key = Keys.hmacShaKeyFor(DEFAULT_SECRET.getBytes());
+        this.expiration = 86400000;
     }
 
     public String createToken(long userId, String email, String role) {
