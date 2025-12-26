@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class JwtProperties {
-    private String secret = "myCustomSecretKeyForJWTThatIsAtLeast32CharactersLong";
+    private String secret = "Bhavana";
     private Long expirationMs = 3600000L;
 }
