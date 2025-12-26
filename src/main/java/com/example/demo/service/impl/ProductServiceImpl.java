@@ -5,6 +5,7 @@ import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -19,23 +20,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product addProduct(Product product) {
+        if (!StringUtils.hasText(product.getModelNumber())) {
+            throw new IllegalArgumentException("Model number required");
+        }
+        
+        if (!StringUtils.hasText(product.getCategory())) {
+            throw new IllegalArgumentException("Category required");
+        }
+        
         return productRepository.save(product);
     }
 
     @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
-    }
-
-    @Override
-    public Product getProductById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id " + id));
-    }
-
-    @Override
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
     }
 }
