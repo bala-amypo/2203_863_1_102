@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.AlertLog;
-import com.example.demo.service.AlertLogService;
+import com.example.demo.service.impl.AlertLogServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ import java.util.Map;
 @Tag(name = "Alert Logs")
 public class AlertLogController {
 
-    private final AlertLogService alertLogService;
+    private final AlertLogServiceImpl alertLogService;
 
     @Autowired
-    public AlertLogController(AlertLogService alertLogService) {
+    public AlertLogController(AlertLogServiceImpl alertLogService) {
         this.alertLogService = alertLogService;
     }
 

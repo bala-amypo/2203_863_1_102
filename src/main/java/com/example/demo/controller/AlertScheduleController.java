@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.AlertSchedule;
-import com.example.demo.service.AlertScheduleService;
+import com.example.demo.service.impl.AlertScheduleServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 @Tag(name = "Alert Schedules")
 public class AlertScheduleController {
 
-    private final AlertScheduleService alertScheduleService;
+    private final AlertScheduleServiceImpl alertScheduleService;
 
     @Autowired
-    public AlertScheduleController(AlertScheduleService alertScheduleService) {
+    public AlertScheduleController(AlertScheduleServiceImpl alertScheduleService) {
         this.alertScheduleService = alertScheduleService;
     }
 

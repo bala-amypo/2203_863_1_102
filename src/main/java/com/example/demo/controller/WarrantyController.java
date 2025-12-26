@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Warranty;
-import com.example.demo.service.WarrantyService;
+import com.example.demo.service.impl.WarrantyServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 @Tag(name = "Warranties")
 public class WarrantyController {
 
-    private final WarrantyService warrantyService;
+    private final WarrantyServiceImpl warrantyService;
 
     @Autowired
-    public WarrantyController(WarrantyService warrantyService) {
+    public WarrantyController(WarrantyServiceImpl warrantyService) {
         this.warrantyService = warrantyService;
     }
 

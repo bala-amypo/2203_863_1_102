@@ -41,6 +41,7 @@ public class AuthController {
                 .build();
         
         User savedUser = userService.register(user);
+        savedUser.setPassword(null); // Don't return password in response
         return ResponseEntity.ok(savedUser);
     }
 
