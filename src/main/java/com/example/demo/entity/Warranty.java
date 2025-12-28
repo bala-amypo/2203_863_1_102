@@ -1,38 +1,23 @@
 package com.example.demo.entity;
 
+import jakarta.validation.constraints.Email;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.util.List;
+import lombok.*;
 
 @Entity
-@Table(name = "warranties")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Warranty {
-    
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    private User user;
-    
-    @ManyToOne
-    private Product product;
-    
-    private LocalDate purchaseDate;
-    
-    private LocalDate expiryDate;
-    
-    @Column(unique = true)
-    private String serialNumber;
-    
-
+    private String name;
+    @Email(message = "Please provide a valid email address")
+    private String email;
+    private String password;
+    private String role;
 }
