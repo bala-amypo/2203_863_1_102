@@ -1,41 +1,31 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.AlertLog;
-import com.example.demo.service.impl.AlertLogServiceImpl;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.AlertLogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/logs")
-@Tag(name = "Alert Logs")
+
 public class AlertLogController {
 
-    private final AlertLogServiceImpl alertLogService;
+    private final AlertLogService alertLogService;
 
-    @Autowired
-    public AlertLogController(AlertLogServiceImpl alertLogService) {
+    public AlertLogController(AlertLogService alertLogService) {
         this.alertLogService = alertLogService;
     }
 
-    @PostMapping("/{warrantyId}")
-    @Operation(summary = "Add alert log")
-    public ResponseEntity<AlertLog> addLog(@PathVariable Long warrantyId,
-                                          @RequestBody Map<String, String> request) {
-        String message = request.get("message");
-        AlertLog savedLog = alertLogService.addLog(warrantyId, message);
-        return ResponseEntity.ok(savedLog);
+    @PostMapping
+    public ResponseEntity<AlertLog> addLog(@RequestParam Long warrantyId, 
+                                           @RequestBody String message) {
+        return ResponseEntity.ok(alertLogService.addLog(warrantyId, message));
     }
 
-    @GetMapping("/{warrantyId}")
-    @Operation(summary = "Get logs for warranty")
-    public ResponseEntity<List<AlertLog>> getLogs(@PathVariable Long warrantyId) {
-        List<AlertLog> logs = alertLogService.getLogs(warrantyId);
-        return ResponseEntity.ok(logs);
+    @GetMapping
+    public ResponseEntity<List<AlertLog>> getLogs(@RequestParam Long warrantyId) {
+        return ResponseEntity.ok(alertLogService.getLogs(warrantyId));
     }
 }
