@@ -1,12 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "products")
@@ -14,20 +9,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Product {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     private String name;
-    
     private String brand;
-    
-    @Column(nullable = false)
     private String modelNumber;
-    
     private String category;
-    
-
 }

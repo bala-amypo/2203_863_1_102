@@ -1,11 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,21 +10,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class AlertLog {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @ManyToOne
-    private Warranty warranty;
-    
-    private LocalDateTime sentAt;
-    
     private String message;
-    
+    private LocalDateTime sentAt;
+
+    @ManyToOne
+    @JoinColumn(name = "warranty_id")
+    private Warranty warranty;
+
     @PrePersist
     public void prePersist() {
-        sentAt = LocalDateTime.now();
+        this.sentAt = LocalDateTime.now();
     }
 }
