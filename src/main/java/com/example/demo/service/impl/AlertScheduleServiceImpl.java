@@ -6,7 +6,6 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.AlertScheduleRepository;
 import com.example.demo.repository.WarrantyRepository;
 import com.example.demo.service.AlertScheduleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +13,12 @@ import java.util.List;
 @Service
 public class AlertScheduleServiceImpl implements AlertScheduleService {
 
-    private final AlertScheduleRepository alertScheduleRepository;
+    private final AlertScheduleRepository scheduleRepository;
     private final WarrantyRepository warrantyRepository;
 
-    public AlertScheduleServiceImpl(AlertScheduleRepository alertScheduleRepository, 
-                                   WarrantyRepository warrantyRepository) {
-        this.alertScheduleRepository = alertScheduleRepository;
+    public AlertScheduleServiceImpl(AlertScheduleRepository scheduleRepository, 
+                                    WarrantyRepository warrantyRepository) {
+        this.scheduleRepository = scheduleRepository;
         this.warrantyRepository = warrantyRepository;
     }
 
@@ -27,20 +26,20 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
     public AlertSchedule createSchedule(Long warrantyId, AlertSchedule schedule) {
         Warranty warranty = warrantyRepository.findById(warrantyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
-        
+
         if (schedule.getDaysBeforeExpiry() < 0) {
             throw new IllegalArgumentException("daysBeforeExpiry must be >= 0");
         }
-        
+
         schedule.setWarranty(warranty);
-        return alertScheduleRepository.save(schedule);
+        return scheduleRepository.save(schedule);
     }
 
     @Override
     public List<AlertSchedule> getSchedules(Long warrantyId) {
-        // Check if warranty exists first
-        warrantyRepository.findById(warrantyId)
-                .orElseThrow(() -> new RuntimeException("Warranty not found"));
-        return alertScheduleRepository.findByWarrantyId(warrantyId);
+        if (warrantyRepository.findById(warrantyId).isEmpty()) {
+             throw new ResourceNotFoundException("Warranty not found");
+        }
+        return scheduleRepository.findByWarrantyId(warrantyId);
     }
 }

@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,11 +22,9 @@ public class ProductServiceImpl implements ProductService {
         if (!StringUtils.hasText(product.getModelNumber())) {
             throw new IllegalArgumentException("Model number required");
         }
-        
         if (!StringUtils.hasText(product.getCategory())) {
             throw new IllegalArgumentException("Category required");
         }
-        
         return productRepository.save(product);
     }
 
